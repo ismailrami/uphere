@@ -20,7 +20,7 @@ class LocationController extends Controller
     	$id = $user->id;
     	$locations = array();
 
-    	$relation = Relation::where('owner',$id)->get();
+    	$relation = $user->relations()->get();
 
     	foreach ($relation as $r ) {
     		$user = User::find($r->relation);

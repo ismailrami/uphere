@@ -22,6 +22,15 @@ class MessageController extends Controller
 
     }
 
+
+    public function get(Request $request)
+    {
+        $message = Message::find($request->id)->get();
+
+        return response()->json(['data' => $message], 200, [], JSON_NUMERIC_CHECK);
+    }
+
+
     public function create(Request $request){
 
     	$user = Auth::user();
@@ -43,6 +52,14 @@ class MessageController extends Controller
     	$message->save();
 
     	return response()->json(['data' => 'success'], 200, [], JSON_NUMERIC_CHECK);
+    }
+
+
+    public function delete(Request $request)
+    {
+        $user = Auth::user();
+
+        $message = Message::where('user_reciver', $request->id)->get();
     }
 
 

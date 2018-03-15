@@ -14,7 +14,7 @@ class CreateForeignTable extends Migration
     public function up()
     {
         Schema::create('relation', function (Blueprint $table) {
-            $table->foreign('owner')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('relation')->references('id')->on('users');
         });
     }
