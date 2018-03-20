@@ -49,9 +49,9 @@ class MessageController extends Controller
     		'user_reciver' => request('user_reciver')
     	]);
 
-    	$message->save();
+    	
 
-    	return response()->json(['data' => 'success'], 200, [], JSON_NUMERIC_CHECK);
+    	return response()->json(['data' => $message->id], 200, [], JSON_NUMERIC_CHECK);
     }
 
 

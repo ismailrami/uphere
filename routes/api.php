@@ -23,10 +23,12 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', 'Api\Auth\LoginController@logout');
 
     Route::get('message', 'Api\MessageController@index');
-
     Route::post('createmessage', 'Api\MessageController@create');
 
     Route::get('locations', 'Api\LocationController@index');
+    Route::post('add_location', 'Api\LocationController@addLocation');
+    Route::get('get_location/{id}', 'Api\LocationController@getLocation');
+
 
     Route::get('relations', 'Api\RelationController@index');
     Route::post('add_relation', 'Api\RelationController@create');

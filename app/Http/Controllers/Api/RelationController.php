@@ -21,7 +21,7 @@ class RelationController extends Controller
 
     	$relations = Relation::where('user_id',$id)->get();
 
-    	return response()->json(['data' => $relations ], 200, [], JSON_NUMERIC_CHECK);
+    	return response()->json(['data' =>  $relations], 200, [], JSON_NUMERIC_CHECK);
 
 
 	}
@@ -31,18 +31,29 @@ class RelationController extends Controller
 	{
 		$user = Auth::user();
 
-    	$id__user = $user->id;
+    	$id_user = $user->id;
+    	$is_there = true;
 
     	$relation = new Relation;
+    	$relations = Relation::where('user_id',$id_user)->get();
+    	foreach ($relations as $r) {
+    		if($r->relation==$request->id)
+    		{
+    			$is_there = false;
+    		}
+    	}
+    	if($is_there){
+	    	$relation=Relation::create([
+	    		'user_id' => $id_user,
+	    		'relation' => request('id')
+	    		]);
 
-    	$relation=Relation::create([
-    		'user_id' => $id__user,
-    		'relation' => request('id')
-    	]);
-    	$relation->save();
+	    	$relation->save();
+	    	return response()->json(['data' => 'success' ], 200, [], JSON_NUMERIC_CHECK);
+    	}
 
 
-    	return response()->json(['data' => 'success' ], 200, [], JSON_NUMERIC_CHECK);
+    	return response()->json(['data' => 'probleme'], 400, [], JSON_NUMERIC_CHECK);
 
 	}
 
