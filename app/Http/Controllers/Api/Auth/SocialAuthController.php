@@ -37,8 +37,7 @@ class SocialAuthController extends Controller
     		return $this->issueToken($request, 'social');
     	}
 
-        //Since we can have nullable email, we need to make sure that user email is not null ;)
-        //Thx to hdahon for the fix
+        
     	$user = User::where('email', $request->email)
                     ->whereNotNull("email")
                     ->first();

@@ -13,13 +13,13 @@ class CreateLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('location', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
 
             $table->increments('id');
             $table->float('latitude');
             $table->float('longitude');
             $table->string('adresse');
-            $table->integer('message_id')->unsigned();
+            $table->string('message');
             $table->integer('user_id')->unsigned();
             
             $table->timestamps();
@@ -37,6 +37,6 @@ class CreateLocationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('location');
+        Schema::dropIfExists('locations');
     }
 }

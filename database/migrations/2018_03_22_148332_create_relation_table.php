@@ -13,11 +13,10 @@ class CreateRelationTable extends Migration
      */
     public function up()
     {
-        Schema::create('relation', function (Blueprint $table) {
+        Schema::create('followers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('relation')->unsigned();
-            
+            $table->integer('user_id')->index();
+            $table->integer('follows_id')->index();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRelationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relation');
+        Schema::dropIfExists('followers');
     }
 }

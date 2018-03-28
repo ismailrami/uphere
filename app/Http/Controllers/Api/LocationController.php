@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Location;
-use App\Relation;
+
+use App\Notifications\SendLocation;
 
 
 
@@ -20,12 +21,12 @@ class LocationController extends Controller
     	$id = $user->id;
     	$locations = array();
 
-    	$relation = $user->relations()->get();
+    	$folowers = $user->folowers();
 
-    	foreach ($relation as $r ) {
-    		$user = User::find($r->relation);
+    	foreach ($folowers as $f ) {
+    		
     		$location = new Location();
-    		$location = $user->locations()->first();
+    		$location = $f->locations()->first();
     		array_push($locations, $location);
     	}
 
@@ -37,13 +38,13 @@ class LocationController extends Controller
     {
         $user = Auth::user();
 
-        $location = new Location();
+        
 
         $this->validate($request,[
                 'latitude'  => 'required',
                 'longitude' => 'required',
                 'adresse'   => 'required',
-                'message_id'=> 'required'
+                'message'=> 'required'
                 
         ]);
 
@@ -51,10 +52,11 @@ class LocationController extends Controller
                 'latitude'  => request('latitude'),
                 'longitude' => request('longitude'),
                 'adresse'   => request('adresse'),
-                //to change recive id of message from the app
-                'message_id'=> request('message_id'),
+                'message'   => request('message'),
                 'user_id'   => $user->id
             ]);
+            $destination_user = User::find($request->user);
+            $destination_user->notify(new SendLocation($location));
 
 
         return response()->json(['data' => 'success' ], 200, [], JSON_NUMERIC_CHECK);
@@ -72,5 +74,10 @@ class LocationController extends Controller
         $location = Location::find($id)->delete();
 
         return response()->json(['data' => 'success' ], 200, [], JSON_NUMERIC_CHECK);
+    }
+
+    public function notifications()
+    {
+        return auth()->user()->unreadNotifications()->limit(5)->get()->toArray();
     }
 }

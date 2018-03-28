@@ -13,9 +13,9 @@ class AddUseridLocation extends Migration
      */
     public function up()
     {
-        Schema::table('location', function (Blueprint $table) {
+        Schema::table('locations', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('message_id')->references('id')->on('message');
+            
         });
     }
 

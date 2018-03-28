@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
 	protected $fillable = [
-        'latitude', 'longitude','adresse','message_id','user_id'
+        'latitude', 'longitude','adresse','message','user_id'
     ];
 
     public function users()
@@ -15,8 +15,5 @@ class Location extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function messages()
-    {
-        return $this->hasOne('App\Message');
-    }
+   
 }

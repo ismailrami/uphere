@@ -21,16 +21,14 @@ Route::post('social_auth', 'Api\Auth\SocialAuthController@socialAuth');
 Route::middleware('auth:api')->group(function () {
 
     Route::post('logout', 'Api\Auth\LoginController@logout');
-
-    Route::get('message', 'Api\MessageController@index');
-    Route::post('createmessage', 'Api\MessageController@create');
+    Route::get('users/{user}/follow', 'Api\UserController@follow')->name('follow');
+    Route::delete('users/{user}/unfollow', 'Api\UserController@unfollow')->name('unfollow');
 
     Route::get('locations', 'Api\LocationController@index');
     Route::post('add_location', 'Api\LocationController@addLocation');
     Route::get('get_location/{id}', 'Api\LocationController@getLocation');
 
 
-    Route::get('relations', 'Api\RelationController@index');
-    Route::post('add_relation', 'Api\RelationController@create');
-    Route::post('delete_relation', 'Api\RelationController@delete');
+
+    Route::get('/notifications', 'LocationController@notifications');
 });
