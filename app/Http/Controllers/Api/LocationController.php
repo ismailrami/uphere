@@ -40,13 +40,7 @@ class LocationController extends Controller
 
         
 
-        $this->validate($request,[
-                'latitude'  => 'required',
-                'longitude' => 'required',
-                'adresse'   => 'required',
-                'message'=> 'required'
-                
-        ]);
+        
 
         $location = Location::create([
                 'latitude'  => request('latitude'),
